@@ -1,0 +1,132 @@
+:root {
+  --stone-900: #14181c;
+  --stone-800: #1c2227;
+  --stone-700: #28313a;
+  --stone-500: #6a7782;
+  --parchment: #dcd5c0;
+  --torch: #f0b44c;
+  --rust: #c4493d;
+  --moss: #7fae7a;
+  --on-torch: #1a1408;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; }
+
+body {
+  background: var(--stone-900);
+  color: var(--parchment);
+  font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+h1, h2 { font-family: "Pirata One", Georgia, serif; font-weight: 400; margin: 0; }
+h1 { font-size: clamp(2rem, 5vw, 3.2rem); color: var(--torch); line-height: 1.1; letter-spacing: 0.02em; }
+h2 { font-size: 1.35rem; margin-bottom: 0.5rem; }
+
+.top { max-width: 1180px; margin: 0 auto 1rem; }
+.top p { margin: 0.25rem 0 0; color: var(--stone-500); }
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 800px) minmax(260px, 340px);
+  gap: 1rem;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.stage { min-width: 0; }
+
+canvas#board {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  background: #000;
+  border: 2px solid var(--stone-700);
+  border-radius: 4px;
+}
+
+canvas#board:focus-visible, button:focus-visible, input:focus-visible {
+  outline: 3px solid var(--torch);
+  outline-offset: 2px;
+}
+
+.pad { display: none; gap: 0.5rem; margin-top: 0.75rem; grid-template-columns: repeat(5, 1fr); }
+
+.side { display: flex; flex-direction: column; gap: 0.75rem; min-width: 0; }
+
+.panel {
+  background: var(--stone-800);
+  border: 1px solid var(--stone-700);
+  border-radius: 4px;
+  padding: 0.9rem 1rem;
+}
+
+.stats { display: flex; gap: 2rem; }
+.stats .label { display: block; font-size: 0.85rem; color: var(--stone-500); }
+.stats strong { font-size: 1.9rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+
+.hp { height: 10px; margin-top: 0.6rem; background: var(--stone-700); border-radius: 2px; overflow: hidden; }
+#hp-bar { height: 100%; width: 100%; background: var(--rust); transition: width 0.2s; }
+.hp-text { margin: 0.25rem 0 0.6rem; font-size: 0.9rem; color: var(--stone-500); }
+
+.log {
+  margin: 0;
+  min-height: 7.5em;
+  white-space: pre-wrap;
+  font: inherit;
+  font-size: 0.92rem;
+  color: var(--parchment);
+}
+
+.algo { margin: 0; font-size: 0.92rem; }
+.algo dt { color: var(--stone-500); margin-top: 0.4rem; }
+.algo dd { margin: 0; }
+.algo .bad, .algo .bad b { color: var(--rust); }
+
+button {
+  font: inherit;
+  color: var(--parchment);
+  background: var(--stone-700);
+  border: 1px solid var(--stone-500);
+  border-radius: 4px;
+  padding: 0.5rem 0.8rem;
+  cursor: pointer;
+  min-height: 44px;
+}
+button:hover { background: #33404b; }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+button.primary { background: var(--torch); border-color: var(--torch); color: var(--on-torch); font-weight: 600; }
+button.primary:hover { background: #f5c36c; }
+
+.toggles { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.75rem; }
+
+.scores { margin: 0; padding-left: 1.4rem; font-size: 0.95rem; }
+.scores li { padding: 0.15rem 0; }
+.scores li span:first-child { display: inline-block; max-width: 11ch; overflow: hidden; text-overflow: ellipsis; vertical-align: bottom; white-space: nowrap; }
+.scores li span:last-child { float: right; font-variant-numeric: tabular-nums; color: var(--torch); }
+.scores li.empty { list-style: none; margin-left: -1.4rem; color: var(--stone-500); }
+
+.keys p { margin: 0; font-size: 0.92rem; color: var(--stone-500); }
+
+.over {
+  position: fixed; inset: 0; display: grid; place-items: center;
+  background: rgba(10, 12, 15, 0.82); padding: 1rem; z-index: 10;
+}
+.over[hidden] { display: none; }
+.card { background: var(--stone-800); border: 1px solid var(--stone-500); border-radius: 4px; padding: 1.5rem; width: min(420px, 100%); }
+.card label { display: block; margin-top: 1rem; font-size: 0.9rem; color: var(--stone-500); }
+.card input {
+  width: 100%; margin-top: 0.25rem; padding: 0.6rem; font: inherit;
+  background: var(--stone-900); color: var(--parchment); border: 1px solid var(--stone-500); border-radius: 4px;
+}
+.row { display: flex; gap: 0.5rem; margin-top: 1rem; flex-wrap: wrap; }
+.msg { min-height: 1.5em; margin: 0.75rem 0 0; }
+
+@media (max-width: 900px) {
+  .layout { grid-template-columns: minmax(0, 1fr); }
+  .pad { display: grid; }
+}
